@@ -1,0 +1,25 @@
+{
+  "name": "devoxx-cfp",
+  "version": "1.0.0",
+  "description": "Claude Code plugin for the Devoxx Call-for-Papers application. Provides 12 specialized AI agents, development skills, and best practices for full-stack development with Java 25, Spring Boot 3, Angular 18, and Firebase.",
+  "author": {
+    "name": "Devoxx",
+    "url": "https://devoxx.com"
+  },
+  "keywords": [
+    "devoxx",
+    "cfp",
+    "call-for-papers",
+    "java",
+    "spring-boot",
+    "angular",
+    "firebase",
+    "langchain4j",
+    "postgresql"
+  ],
+  "license": "MIT",
+  "agents": "agents/",
+  "skills": "skills/",
+  "commands": "commands/",
+  "rules": "rules/"
+}

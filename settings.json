@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": ["Bash(mise *)"]
+  },
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/stephan/IdeaProjects/devoxx-claude-plugin/hooks/rm_to_mv_hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

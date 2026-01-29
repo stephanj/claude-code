@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(/Users/stephan/IdeaProjects/devoxx-claude-plugin/hooks/rm_to_mv_hook.sh:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.claude.com)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/stephan/IdeaProjects/devoxx-claude-plugin/hooks/rm_to_mv_hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
