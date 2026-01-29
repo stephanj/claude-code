@@ -1,6 +1,7 @@
-# Devoxx CFP Claude Code Plugin
+# Claude Code Plugin
 
-A comprehensive Claude Code plugin for developing the Devoxx Call-for-Papers (CFP) application. This plugin provides 12 specialized AI agents, development skills, project rules, custom commands, and safety hooks to streamline full-stack development.
+A comprehensive Claude Code plugin for developing Devoxx related applications. 
+This plugin provides 12 specialized AI agents, development skills, project rules, custom commands, and safety hooks to streamline full-stack development.
 
 ## Table of Contents
 
