@@ -22,7 +22,7 @@ This plugin provides 12 specialized AI agents, development skills, project rules
 This plugin transforms Claude Code into a specialized development assistant for the Devoxx CFP application. It includes:
 
 - **12 Specialized Agents** - Domain experts for different aspects of development
-- **3 Development Skills** - Best practices and workflows
+- **70+ Development Skills** - Best practices, patterns, and reference documentation
 - **Project Rules** - Framework-specific conventions
 - **Custom Commands** - Streamlined workflows like git commit & push
 - **Safety Hooks** - Protection against destructive operations
@@ -158,6 +158,159 @@ description: When to use this skill
 ```
 
 ### Available Skills
+
+This plugin includes **70+ specialized skills** organized by category:
+
+#### Frontend Frameworks
+
+| Skill | Description |
+|-------|-------------|
+| **angular-architect** | Components, NgRx state management, routing, RxJS patterns, testing |
+| **react-expert** | Hooks patterns, React 19 features, server components, state management, performance |
+| **react-native-expert** | Expo router, list optimization, platform handling, storage hooks |
+| **vue-expert** | Composition API, Nuxt, TypeScript integration, state management |
+| **vue-expert-js** | JSDoc typing for Vue, composables patterns, testing |
+| **nextjs-developer** | App router, server components, data fetching, server actions |
+| **typescript-pro** | Advanced types, configuration, patterns, type guards, utility types |
+| **javascript-pro** | Async patterns, browser APIs, ES modules, Node.js essentials |
+
+#### JVM & .NET Backend
+
+| Skill | Description |
+|-------|-------------|
+| **java-architect** | Spring Boot setup, JPA optimization, WebFlux, Spring Security, testing |
+| **spring-boot-engineer** | Web, data, security, cloud, testing patterns |
+| **kotlin-specialist** | Coroutines/Flow, Android Compose, KMP, Ktor server, DSL idioms |
+| **csharp-developer** | Modern C#, ASP.NET Core, Blazor, Entity Framework, performance |
+| **dotnet-core-expert** | Clean architecture, minimal APIs, authentication, cloud-native |
+
+#### Python Ecosystem
+
+| Skill | Description |
+|-------|-------------|
+| **python-pro** | Type system, async patterns, testing, packaging, standard library |
+| **django-expert** | Models/ORM, DRF serializers, authentication, viewsets, testing |
+| **fastapi-expert** | Pydantic v2, async SQLAlchemy, endpoints, authentication, testing |
+| **pandas-pro** | DataFrame operations, aggregation, merging, performance optimization |
+
+#### Systems Programming
+
+| Skill | Description |
+|-------|-------------|
+| **golang-pro** | Concurrency, generics, interfaces, project structure, testing |
+| **rust-engineer** | Ownership, traits, async, error handling, testing |
+| **cpp-pro** | Modern C++, templates, concurrency, memory/performance, build tooling |
+| **swift-expert** | SwiftUI patterns, async/concurrency, protocol-oriented, testing |
+
+#### PHP, Ruby & CMS Platforms
+
+| Skill | Description |
+|-------|-------------|
+| **php-pro** | Modern PHP features, Laravel/Symfony patterns, async, testing |
+| **laravel-specialist** | Eloquent, Livewire, queues, routing, testing |
+| **rails-expert** | Active Record, Hotwire/Turbo, RSpec testing, background jobs, API development |
+| **wordpress-pro** | Gutenberg blocks, hooks/filters, plugin/theme development, performance |
+| **shopify-expert** | Liquid templating, Storefront API, app development, checkout customization |
+
+#### Database & SQL
+
+| Skill | Description |
+|-------|-------------|
+| **postgres-pro** | Extensions, JSONB, replication, performance tuning, maintenance |
+| **sql-pro** | Query patterns, window functions, optimization, database design |
+| **database-optimizer** | Index strategies, MySQL/PostgreSQL tuning, monitoring, query optimization |
+
+#### DevOps & Infrastructure
+
+| Skill | Description |
+|-------|-------------|
+| **devops-engineer** | CI/CD, Docker patterns, GitHub Actions, incident response, platform engineering |
+| **kubernetes-specialist** | Helm charts, GitOps, service mesh, operators, networking, troubleshooting |
+| **terraform-engineer** | Module patterns, state management, providers, testing, best practices |
+| **cloud-architect** | AWS, Azure, GCP reference patterns and best practices |
+
+#### Observability & SRE
+
+| Skill | Description |
+|-------|-------------|
+| **monitoring-expert** | Prometheus metrics, OpenTelemetry, dashboards, alerting, structured logging |
+| **sre-engineer** | SLO/SLI management, error budgets, toil automation, incident response |
+| **chaos-engineer** | Experiment design, game days, Kubernetes chaos, infrastructure chaos |
+
+#### Security
+
+| Skill | Description |
+|-------|-------------|
+| **secure-code-guardian** | OWASP prevention, input validation, XSS/CSRF protection, security headers |
+| **security-reviewer** | SAST tools, secret scanning, vulnerability patterns, penetration testing |
+
+#### Testing & Quality
+
+| Skill | Description |
+|-------|-------------|
+| **test-master** | TDD, unit/integration/E2E testing, QA methodology, test reports |
+| **playwright-expert** | Selectors/locators, page object model, API mocking, debugging flaky tests |
+| **code-reviewer** | Review checklist, feedback patterns, spec compliance, common issues |
+| **debugging-wizard** | Debugging strategies, tools, systematic debugging, common patterns |
+
+#### API & Backend Architecture
+
+| Skill | Description |
+|-------|-------------|
+| **api-designer** | REST patterns, OpenAPI, pagination, versioning, error handling |
+| **graphql-architect** | Schema design, resolvers, federation, subscriptions, security |
+| **microservices-architect** | Decomposition, communication patterns, data management, observability |
+| **websocket-engineer** | Protocol, scaling, security, patterns, alternatives (SSE, polling) |
+| **nestjs-expert** | Controllers/routing, services/DI, DTOs/validation, authentication |
+
+#### Architecture & Design
+
+| Skill | Description |
+|-------|-------------|
+| **architecture-designer** | ADR templates, architecture patterns, system design, NFR checklist |
+| **fullstack-guardian** | Integration patterns, security checklists, API design standards |
+| **legacy-modernizer** | Strangler fig pattern, migration strategies, refactoring, legacy testing |
+
+#### AI/ML Engineering
+
+| Skill | Description |
+|-------|-------------|
+| **ml-pipeline** | Feature engineering, training pipelines, experiment tracking, model validation |
+| **rag-architect** | Vector databases, chunking strategies, embedding models, retrieval optimization |
+| **fine-tuning-expert** | LoRA/PEFT, dataset preparation, hyperparameter tuning, deployment |
+| **prompt-engineer** | Prompt patterns, evaluation frameworks, structured outputs, system prompts |
+
+#### Mobile, Gaming & Specialized
+
+| Skill | Description |
+|-------|-------------|
+| **flutter-expert** | BLoC/Riverpod state, GoRouter navigation, widget patterns, performance |
+| **game-developer** | Unity/Unreal patterns, ECS, multiplayer networking, performance optimization |
+| **embedded-systems** | Microcontrollers, RTOS patterns, memory/power optimization, protocols |
+| **salesforce-developer** | Apex development, LWC, SOQL/SOSL, integration patterns, DevOps |
+
+#### Data Engineering & Tooling
+
+| Skill | Description |
+|-------|-------------|
+| **spark-engineer** | RDD operations, Spark SQL/DataFrames, streaming, partitioning/caching |
+| **mcp-developer** | MCP protocol, TypeScript/Python SDK, tools and resources |
+| **cli-developer** | Design patterns, Go/Node/Python CLI development, UX patterns |
+| **code-documenter** | API docs, docstrings, JSDoc, user guides, documentation systems |
+
+#### Requirements & Workflow
+
+| Skill | Description |
+|-------|-------------|
+| **feature-forge** | EARS syntax, acceptance criteria, specification templates, interviews |
+| **spec-miner** | Analysis process, specification extraction, EARS format |
+| **atlassian-mcp** | Jira queries, Confluence operations, MCP server setup, workflows |
+
+---
+
+### CFP-Specific Skills
+
+These skills are specifically designed for the Devoxx CFP application:
 
 #### cfp-development-practices
 
