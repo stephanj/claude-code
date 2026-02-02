@@ -4,7 +4,15 @@
       "Bash(ls:*)",
       "Bash(/Users/stephan/IdeaProjects/devoxx-claude-plugin/hooks/rm_to_mv_hook.sh:*)",
       "WebSearch",
-      "WebFetch(domain:docs.claude.com)"
+      "WebFetch(domain:docs.claude.com)",
+      "Skill(git-commit-push)",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code log --oneline -5)",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code add hooks/pre-tool-use/ hooks/post-tool-use/ hooks/notification/ hooks/utils/ hooks/tests/)",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code commit -m \"$\\(cat <<''EOF''\nfeat\\(hooks\\): add comprehensive safety and automation hooks\n\nAdd pre-tool-use hooks:\n- block-dangerous-commands.js: Blocks rm -rf ~, fork bombs, force push main\n- protect-secrets.js: Prevents reading/exfiltrating .env, SSH keys, credentials\n\nAdd post-tool-use hooks:\n- auto-stage.js: Auto-stages files after Edit/Write for git tracking\n\nAdd notification hooks:\n- notify-permission.js: Sends Slack alerts when Claude needs user input\n\nAdd utilities:\n- event-logger.py: Debug utility for inspecting hook event payloads\n\nInclude unit tests for all hooks.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code add README.md)",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code commit -m \"$\\(cat <<''EOF''\ndocs\\(readme\\): document new hooks architecture\n\nUpdate README with comprehensive documentation for:\n- Pre-tool-use hooks \\(block-dangerous-commands, protect-secrets\\)\n- Post-tool-use hooks \\(auto-stage\\)\n- Notification hooks \\(notify-permission for Slack\\)\n- Utilities \\(event-logger for debugging\\)\n- Hook tests structure\n- Updated settings.json example with all hook configurations\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code status)",
+      "Bash(git -C /Users/stephan/IdeaProjects/claude-code push)"
     ]
   },
   "enableAllProjectMcpServers": true,
