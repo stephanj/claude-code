@@ -19,10 +19,10 @@ A comprehensive collection of Claude Code extensions including specialized AI ag
 
 This plugin collection enhances Claude Code with:
 
-- **12 Specialized Agents** - Domain experts for different aspects of development
-- **70+ Development Skills** - Best practices, patterns, and reference documentation
+- **17 Specialized Agents** - Domain experts for different aspects of development
+- **110+ Development Skills** - Best practices, patterns, and reference documentation
+- **15+ Custom Commands** - Streamlined workflows for git, planning, and communication
 - **Project Rules** - Framework-specific conventions
-- **Custom Commands** - Streamlined workflows like git commit & push
 - **Safety Hooks** - Protection against destructive operations
 
 ## Installation
@@ -45,27 +45,32 @@ claude-code/
 ├── settings.json         # Global settings and permissions
 ├── settings.local.json   # Local developer overrides (gitignored)
 ├── CLAUDE.md             # Instructions for Claude Code instances
-├── agents/               # Specialized AI agent definitions
+├── agents/               # 17 specialized AI agent definitions
 │   ├── java-architect.md
 │   ├── spring-boot-engineer.md
 │   ├── angular-architect.md
-│   ├── postgres-pro.md
-│   ├── test-automator.md
-│   ├── code-reviewer.md
-│   ├── typescript-pro.md
-│   ├── security-auditor.md
-│   ├── ui-ux-designer.md
-│   └── accessibility-tester.md
-├── skills/               # 70+ development practice skills
+│   ├── mermaid-diagram-specialist.md
+│   ├── ascii-ui-mockup-generator.md
+│   ├── codebase-pattern-finder.md
+│   ├── communication-excellence-coach.md
+│   └── ... (17 agents)
+├── skills/               # 110+ development practice skills
 │   ├── react-expert/
 │   ├── python-pro/
 │   ├── kubernetes-specialist/
-│   ├── ... (70+ skills)
-│   └── typescript-pro/
+│   └── ... (110+ skills)
 ├── rules/                # Framework-specific rules
 │   └── angular.md
 ├── commands/             # Custom Claude Code commands
-│   └── git-commit-push.md
+│   ├── git-commit-push.md
+│   ├── codex-plan.md
+│   ├── compose-email.md
+│   ├── viral-tweet.md
+│   └── project/          # Project workflow commands
+│       ├── discovery/
+│       ├── planning/
+│       ├── execution/
+│       └── retrospectives/
 └── hooks/                # Safety and automation hooks
     ├── pre-tool-use/     # Intercept before tool execution
     │   ├── block-dangerous-commands.js
@@ -102,26 +107,43 @@ tools: Read, Write, Edit, Bash, Glob, Grep
 
 | Agent | Description | Use When |
 |-------|-------------|----------|
-| **java-architect** | Clean architecture, domain modeling, SOLID principles, Java 25 features | Designing domain models, architecting services, using records/sealed classes |
-| **spring-boot-engineer** | REST APIs, Spring configuration, integrations | Building endpoints, configuring Spring Boot, transaction management |
-| **postgres-pro** | SQL optimization, Liquibase migrations, schema design, query tuning | Database design, writing migrations, optimizing queries |
+| **java-architect** | Clean architecture, domain modeling, SOLID principles, Java 25 features | Designing domain models, architecting services |
+| **spring-boot-engineer** | REST APIs, Spring configuration, integrations | Building endpoints, configuring Spring Boot |
+| **postgres-pro** | SQL optimization, Liquibase migrations, schema design | Database design, writing migrations, optimizing queries |
+| **firebase-auth-specialist** | Firebase Admin SDK, Spring Security, auth flows | Authentication implementation, token handling |
+| **langchain4j-ai-engineer** | AI services, RAG patterns, prompt engineering | AI-powered features, embeddings, LLM integration |
 
 #### Frontend Development
 
 | Agent | Description | Use When |
 |-------|-------------|----------|
-| **angular-architect** | Angular 18, signals, reactive forms, PrimeNG, accessibility | Building components, state management, form handling |
-| **typescript-pro** | Type safety, branded types, discriminated unions, Zod validation | Type definitions, validation schemas, service patterns |
-| **ui-ux-designer** | UI components, design systems, accessibility patterns | Design system work, UI improvements, visual consistency |
+| **angular-architect** | Angular 18, signals, reactive forms, PrimeNG | Building components, state management, form handling |
+| **typescript-pro** | Type safety, branded types, discriminated unions | Type definitions, validation schemas, service patterns |
+| **ui-ux-designer** | Research-backed UI/UX feedback, design critique | Honest design assessment, avoiding generic aesthetics |
+| **ascii-ui-mockup-generator** | ASCII wireframes and UI mockups | Visualizing UI concepts before implementation |
 
-#### Cross-Cutting Concerns
+#### Quality & Security
 
 | Agent | Description | Use When |
 |-------|-------------|----------|
-| **test-automator** | JUnit 5, Testcontainers, Angular testing, test strategies | Writing tests, improving coverage, test infrastructure |
-| **code-reviewer** | Code quality, security, best practices enforcement | Code reviews, quality checks, convention compliance |
-| **security-auditor** | Vulnerability detection, secure patterns, input validation | Security reviews, penetration testing, compliance |
-| **accessibility-tester** | WCAG AA compliance, keyboard navigation, screen readers | Accessibility audits, a11y fixes, compliance testing |
+| **test-automator** | JUnit 5, Testcontainers, Angular testing | Writing tests, improving coverage |
+| **code-reviewer** | Code quality, security, best practices | Code reviews, quality checks |
+| **security-auditor** | Vulnerability detection, OWASP compliance | Security reviews, penetration testing |
+| **accessibility-tester** | WCAG AA compliance, keyboard navigation | Accessibility audits, a11y fixes |
+
+#### Documentation & Visualization
+
+| Agent | Description | Use When |
+|-------|-------------|----------|
+| **mermaid-diagram-specialist** | Flowcharts, sequence diagrams, ERDs, architecture | Technical documentation, system visualization |
+| **codebase-pattern-finder** | Find similar implementations and patterns | Looking for code examples to model after |
+
+#### Communication & Productivity
+
+| Agent | Description | Use When |
+|-------|-------------|----------|
+| **communication-excellence-coach** | Email refinement, tone calibration, roleplay | Reviewing drafts, preparing difficult conversations |
+| **general-purpose** | Default agent for complex multi-step tasks | General development work, automatic delegation |
 
 ### Agent Collaboration
 
@@ -129,7 +151,7 @@ Agents are designed to work together with clear ownership boundaries. For exampl
 
 - **java-architect** defines exception hierarchies; **spring-boot-engineer** implements `@ExceptionHandler`
 - **angular-architect** builds components; **typescript-pro** defines type contracts
-- **test-automator** writes tests; **security-auditor** reviews for vulnerabilities
+- **mermaid-diagram-specialist** documents architecture; **codebase-pattern-finder** locates implementations
 
 ## Skills
 
@@ -148,7 +170,7 @@ description: When to use this skill
 
 ### Available Skills
 
-This plugin includes **70+ specialized skills** organized by category:
+This plugin includes **110+ specialized skills** organized by category:
 
 #### Frontend Frameworks
 
@@ -294,7 +316,73 @@ This plugin includes **70+ specialized skills** organized by category:
 | **feature-forge** | EARS syntax, acceptance criteria, specification templates, interviews |
 | **spec-miner** | Analysis process, specification extraction, EARS format |
 | **atlassian-mcp** | Jira queries, Confluence operations, MCP server setup, workflows |
+| **jira** | Jira integration patterns and workflows |
+| **qa-test-planner** | QA planning, test strategy, coverage analysis |
 
+#### Communication & Writing
+
+| Skill | Description |
+|-------|-------------|
+| **professional-communication** | Business communication, stakeholder updates |
+| **difficult-workplace-conversations** | Handling sensitive discussions, conflict resolution |
+| **feedback-mastery** | Giving and receiving constructive feedback |
+| **crafting-effective-readmes** | Documentation best practices, README templates |
+| **writing-clearly-and-concisely** | Technical writing, clarity improvements |
+| **humanizer** | Making AI-generated content more natural |
+
+#### Diagramming & Visualization
+
+| Skill | Description |
+|-------|-------------|
+| **c4-architecture** | C4 model diagrams for software architecture |
+| **mermaid-diagrams** | Mermaid syntax for flowcharts, sequences, ERDs |
+| **draw-io** | Draw.io diagram creation and editing |
+| **excalidraw** | Excalidraw whiteboard diagrams |
+| **marp-slide** | Marp presentation slides from markdown |
+
+#### Workflow & Productivity
+
+| Skill | Description |
+|-------|-------------|
+| **daily-meeting-update** | Standup summaries, progress reports |
+| **session-handoff** | Context handoff between sessions |
+| **ship-learn-next** | Iterative shipping methodology |
+| **commit-work** | Commit message crafting, git workflows |
+| **dependency-updater** | Dependency management, version updates |
+| **reducing-entropy** | Code simplification, complexity reduction |
+
+#### Code Generation & Tooling
+
+| Skill | Description |
+|-------|-------------|
+| **codex** | AI-powered code generation patterns |
+| **command-creator** | Claude Code command development |
+| **plugin-forge** | Claude Code plugin development |
+| **openapi-to-typescript** | Generate TypeScript from OpenAPI specs |
+| **agent-md-refactor** | Agent markdown file refactoring |
+| **skill-judge** | Skill quality evaluation |
+
+#### Analysis & Design
+
+| Skill | Description |
+|-------|-------------|
+| **naming-analyzer** | Variable/function naming improvements |
+| **domain-name-brainstormer** | Domain name ideation |
+| **database-schema-designer** | Database schema design patterns |
+| **design-system-starter** | Design system foundations |
+| **requirements-clarity** | Requirements analysis and clarification |
+| **game-changing-features** | Feature ideation and prioritization |
+
+#### Tool Integrations
+
+| Skill | Description |
+|-------|-------------|
+| **datadog-cli** | Datadog CLI operations |
+| **gemini** | Google Gemini API integration |
+| **perplexity** | Perplexity AI integration |
+| **mui** | Material UI component patterns |
+| **gepetto** | AI orchestration patterns |
+| **web-to-markdown** | Web content to markdown conversion |
 
 ## Rules
 
@@ -354,25 +442,61 @@ readonly hasError = computed(() => this.form.invalid && this.form.touched);
 
 Commands are custom Claude Code workflows defined in markdown files. They're invoked with the `/command-name` syntax.
 
-### git-commit-push
+### Available Commands
 
-**Location:** `commands/git-commit-push.md`
+#### Git & Version Control
+
+| Command | Description |
+|---------|-------------|
+| `/git-commit-push` | Create organized git commits with conventional commits and push |
+| `/sync-branch` | Sync feature branch with latest main branch via rebase |
+
+#### Planning & Documentation
+
+| Command | Description |
+|---------|-------------|
+| `/codex-plan` | Create detailed implementation plans using structured reasoning |
+| `/explain-changes-mental-model` | Build mental model of code changes in logical chunks |
+| `/explain-pr-changes` | Generate comprehensive PR summaries and visualizations |
+| `/sync-skills-readme` | Sync README with current skills inventory |
+
+#### Communication
+
+| Command | Description |
+|---------|-------------|
+| `/compose-email` | Draft professional emails using What-Why-How framework |
+| `/viral-tweet` | Transform ideas into optimized viral posts for X |
+
+#### Project Workflows
+
+Located in `commands/project/`:
+
+**Discovery Phase:**
+- `/project/discovery/create-epic-discovery` - Start epic discovery process
+- `/project/discovery/synthesize-discovery` - Synthesize discovery findings
+- `/project/discovery/approve-synthesis` - Approve discovery synthesis
+
+**Planning Phase:**
+- `/project/planning/create-epic-plan` - Create epic-level plan
+- `/project/planning/create-implementation-plan` - Create detailed implementation plan
+
+**Execution Phase:**
+- `/project/execution/execute-ticket` - Execute a ticket/task
+- `/project/execution/complete-ticket` - Mark ticket as complete
+
+**Retrospectives:**
+- `/project/retrospectives/complete-sprint` - Complete sprint retrospective
+- `/project/retrospectives/complete-epic` - Complete epic retrospective
+
+### Command Example: git-commit-push
 
 **Invocation:** `/git-commit-push`
-
-**Description:** Creates organized git commits using conventional commits format and pushes to remote.
 
 **What it does:**
 1. Reviews current git status and diff
 2. Checks recent commit history for style consistency
 3. Creates logical, descriptive commits with conventional commit prefixes
 4. Pushes all commits to remote
-
-**Allowed Tools:**
-- `Bash(git add:*)`
-- `Bash(git status:*)`
-- `Bash(git commit:*)`
-- `Bash(git push:*)`
 
 **Conventional Commit Types:**
 ```
