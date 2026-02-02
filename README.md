@@ -75,8 +75,18 @@ devoxx-claude-plugin/
 │   └── angular.md
 ├── commands/             # Custom Claude Code commands
 │   └── git-commit-push.md
-└── hooks/                # Safety hooks
-    └── rm_to_mv_hook.sh
+└── hooks/                # Safety and automation hooks
+    ├── pre-tool-use/     # Intercept before tool execution
+    │   ├── block-dangerous-commands.js
+    │   └── protect-secrets.js
+    ├── post-tool-use/    # Actions after tool execution
+    │   └── auto-stage.js
+    ├── notification/     # External notifications
+    │   └── notify-permission.js
+    ├── utils/            # Hook development utilities
+    │   └── event-logger.py
+    ├── tests/            # Hook unit tests
+    └── rm_to_mv_hook.sh  # Legacy rm-to-mv safety hook
 ```
 
 ## Agents
@@ -286,15 +296,72 @@ chore:    Maintenance, dependencies
 
 ## Hooks
 
-Hooks intercept tool calls and can modify, allow, or block them. They provide safety mechanisms and workflow automation.
+Hooks intercept tool calls and can modify, allow, or block them. They provide safety mechanisms, workflow automation, and external notifications.
 
-### rm_to_mv_hook.sh
+All hooks log to `~/.claude/hooks-logs/YYYY-MM-DD.jsonl` for debugging and auditing.
+
+### Pre-Tool-Use Hooks
+
+These hooks run **before** a tool executes and can block dangerous operations.
+
+#### block-dangerous-commands.js
+
+**Location:** `hooks/pre-tool-use/block-dangerous-commands.js`
+
+**Matcher:** `Bash`
+
+**Purpose:** Blocks dangerous shell commands before execution
+
+**Safety Levels:**
+| Level | Blocks |
+|-------|--------|
+| `critical` | rm -rf ~, dd to disk, fork bombs, mkfs |
+| `high` | + force push main, git reset --hard, chmod 777, secrets exposure |
+| `strict` | + any force push, sudo rm, docker prune |
+
+**Blocked Patterns (examples):**
+```bash
+rm -rf ~/                    # 🚨 BLOCKED: rm targeting home directory
+git push --force main        # ⛔ BLOCKED: force push to main/master
+curl ... | sh                # ⛔ BLOCKED: piping URL to shell (RCE risk)
+chmod 777 file               # ⛔ BLOCKED: chmod 777 is a security risk
+```
+
+---
+
+#### protect-secrets.js
+
+**Location:** `hooks/pre-tool-use/protect-secrets.js`
+
+**Matcher:** `Read|Edit|Write|Bash`
+
+**Purpose:** Prevents reading, modifying, or exfiltrating sensitive files
+
+**Protected Files:**
+| Level | Files |
+|-------|-------|
+| `critical` | `.env`, `.ssh/id_*`, `.aws/credentials`, `.kube/config`, `*.pem`, `*.key` |
+| `high` | `credentials.json`, `secrets.yaml`, service accounts, `.netrc`, `.npmrc` |
+| `strict` | `database.yml`, `.gitconfig`, `.curlrc` |
+
+**Blocked Operations:**
+```bash
+cat .env                      # 🔐 BLOCKED: .env file contains secrets
+scp id_rsa user@host:         # 🛡️ BLOCKED: Copying private key
+curl -d @.env http://...      # 🛡️ BLOCKED: Uploading secrets via curl
+```
+
+**Allowlist:** Template files like `.env.example`, `.env.template` are always allowed.
+
+---
+
+#### rm_to_mv_hook.sh (Legacy)
 
 **Location:** `hooks/rm_to_mv_hook.sh`
 
-**Type:** `preToolUse` hook for `Bash` tool
+**Matcher:** `Bash`
 
-**Purpose:** Safety net against accidental file deletion
+**Purpose:** Transforms `rm` commands to `mv` for safe file deletion
 
 **How it works:**
 1. Intercepts any `rm` command in Bash
@@ -312,6 +379,116 @@ mkdir -p /tmp/rm_trash_20240115_143022 && mv src/old-module /tmp/rm_trash_202401
 ```
 
 **Requirements:** `jq` must be installed
+
+---
+
+### Post-Tool-Use Hooks
+
+These hooks run **after** a tool executes successfully.
+
+#### auto-stage.js
+
+**Location:** `hooks/post-tool-use/auto-stage.js`
+
+**Matcher:** `Edit|Write`
+
+**Purpose:** Automatically stages files after Claude modifies them
+
+**Benefits:**
+- `git status` shows exactly what Claude modified
+- Easy to review changes before committing
+- No manual staging needed
+
+**Behavior:**
+- Only stages files in git repositories
+- Relies on `.gitignore` to exclude sensitive files
+- Silent failures (non-blocking)
+
+---
+
+### Notification Hooks
+
+These hooks send external notifications when Claude needs attention.
+
+#### notify-permission.js
+
+**Location:** `hooks/notification/notify-permission.js`
+
+**Matcher:** `permission_prompt|idle_prompt|elicitation_dialog`
+
+**Purpose:** Sends Slack alerts when Claude needs user input
+
+**Notification Types:**
+| Type | Emoji | When |
+|------|-------|------|
+| `permission_prompt` | 🔐 | Claude needs permission (Bash, Write, Edit) |
+| `idle_prompt` | 💤 | Claude is waiting for user response |
+| `elicitation_dialog` | 🔧 | Claude needs a choice (MCP, options) |
+
+**Setup:**
+```bash
+export CCH_SLA_WEBHOOK="https://hooks.slack.com/services/..."
+```
+
+**Slack Message Format:**
+- Header with notification type and project name
+- Session ID for context
+- Message details and working directory
+- Timestamp
+
+---
+
+### Utilities
+
+#### event-logger.py
+
+**Location:** `hooks/utils/event-logger.py`
+
+**Purpose:** Debug utility for inspecting hook event payloads
+
+**Usage:** When building custom hooks, add this to any event to see the exact data structure:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [{"hooks": [{"type": "command", "command": "python /path/to/event-logger.py"}]}]
+  }
+}
+```
+
+**Supported Events (13 total):**
+`SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostToolUseFailure`, `PermissionRequest`, `SubagentStart`, `SubagentStop`, `Stop`, `PreCompact`, `Setup`, `Notification`
+
+**View logs:**
+```bash
+# Today's events
+cat ~/.claude/hooks-logs/$(date +%Y-%m-%d).jsonl | jq
+
+# Live tail
+tail -f ~/.claude/hooks-logs/$(date +%Y-%m-%d).jsonl | jq
+
+# Filter by event type
+cat ~/.claude/hooks-logs/*.jsonl | jq 'select(.hook_event_name=="PreToolUse")'
+```
+
+---
+
+### Hook Tests
+
+Unit tests for all hooks are in `hooks/tests/`:
+
+```
+hooks/tests/
+├── pre-tool-use/
+│   ├── block-dangerous-commands.test.js
+│   └── protect-secrets.test.js
+├── post-tool-use/
+│   └── auto-stage.test.js
+└── notification/
+    └── notify-permission.test.js
+```
+
+Run tests with Node.js test runner or your preferred test framework.
 
 ## Configuration Files
 
@@ -347,14 +524,33 @@ Global plugin settings including permissions and hooks:
     "allow": ["Bash(mise *)"]
   },
   "hooks": {
-    "preToolUse": [
+    "PreToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
-          {
-            "type": "command",
-            "command": "/path/to/hooks/rm_to_mv_hook.sh"
-          }
+          { "type": "command", "command": "node /path/to/hooks/pre-tool-use/block-dangerous-commands.js" }
+        ]
+      },
+      {
+        "matcher": "Read|Edit|Write|Bash",
+        "hooks": [
+          { "type": "command", "command": "node /path/to/hooks/pre-tool-use/protect-secrets.js" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "node /path/to/hooks/post-tool-use/auto-stage.js" }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
+        "hooks": [
+          { "type": "command", "command": "node /path/to/hooks/notification/notify-permission.js" }
         ]
       }
     ]
@@ -364,7 +560,10 @@ Global plugin settings including permissions and hooks:
 
 **Permissions:** Pre-allows `mise` commands without prompts
 
-**Hooks:** Configures the rm-to-mv safety hook for all Bash commands
+**Hooks:**
+- **PreToolUse:** Blocks dangerous commands and protects secrets before execution
+- **PostToolUse:** Auto-stages modified files for git tracking
+- **Notification:** Sends Slack alerts when Claude needs attention
 
 ### settings.local.json
 
