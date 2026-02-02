@@ -1,7 +1,6 @@
-# Claude Code Plugin
+# Claude Code Plugin Collection
 
-A comprehensive Claude Code plugin for developing Devoxx related applications. 
-This plugin provides 12 specialized AI agents, development skills, project rules, custom commands, and safety hooks to streamline full-stack development.
+A comprehensive collection of Claude Code extensions including specialized AI agents, 70+ development skills, project rules, custom commands, and safety hooks to streamline full-stack development.
 
 ## Table of Contents
 
@@ -15,11 +14,10 @@ This plugin provides 12 specialized AI agents, development skills, project rules
 - [Hooks](#hooks)
 - [Configuration Files](#configuration-files)
 - [Usage Examples](#usage-examples)
-- [CFP Tech Stack](#cfp-tech-stack)
 
 ## Overview
 
-This plugin transforms Claude Code into a specialized development assistant for the Devoxx CFP application. It includes:
+This plugin collection enhances Claude Code with:
 
 - **12 Specialized Agents** - Domain experts for different aspects of development
 - **70+ Development Skills** - Best practices, patterns, and reference documentation
@@ -29,30 +27,28 @@ This plugin transforms Claude Code into a specialized development assistant for 
 
 ## Installation
 
-1. Clone this repository into your Claude Code plugins directory:
+1. Clone this repository:
 
 ```bash
-git clone https://github.com/stephanj/Devoxx-Claude-Plugin.git
+git clone https://github.com/stephanj/claude-code.git
 ```
 
-2. The plugin is automatically loaded by Claude Code when you work in a project that references it.
+2. Copy the desired components (agents, skills, hooks, commands) to your project's `.claude/` directory or reference them in your Claude Code settings.
 
-3. Verify installation by checking available agents in Claude Code.
+3. Verify installation by checking available agents and skills in Claude Code.
 
 ## Plugin Structure
 
 ```
-devoxx-claude-plugin/
+claude-code/
 ├── plugin.json           # Plugin manifest (name, version, entry points)
 ├── settings.json         # Global settings and permissions
 ├── settings.local.json   # Local developer overrides (gitignored)
 ├── CLAUDE.md             # Instructions for Claude Code instances
-├── agents/               # 12 specialized AI agent definitions
+├── agents/               # Specialized AI agent definitions
 │   ├── java-architect.md
 │   ├── spring-boot-engineer.md
 │   ├── angular-architect.md
-│   ├── firebase-auth-specialist.md
-│   ├── langchain4j-ai-engineer.md
 │   ├── postgres-pro.md
 │   ├── test-automator.md
 │   ├── code-reviewer.md
@@ -60,17 +56,12 @@ devoxx-claude-plugin/
 │   ├── security-auditor.md
 │   ├── ui-ux-designer.md
 │   └── accessibility-tester.md
-├── skills/               # Development practice skills
-│   ├── cfp-development-practices/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── accessibility-checklist.md
-│   │       ├── full-stack-workflow.md
-│   │       └── test-commands.md
-│   ├── java-best-practices/
-│   │   └── SKILL.md
-│   └── typescript-best-practices/
-│       └── SKILL.md
+├── skills/               # 70+ development practice skills
+│   ├── react-expert/
+│   ├── python-pro/
+│   ├── kubernetes-specialist/
+│   ├── ... (70+ skills)
+│   └── typescript-pro/
 ├── rules/                # Framework-specific rules
 │   └── angular.md
 ├── commands/             # Custom Claude Code commands
@@ -112,7 +103,7 @@ tools: Read, Write, Edit, Bash, Glob, Grep
 | Agent | Description | Use When |
 |-------|-------------|----------|
 | **java-architect** | Clean architecture, domain modeling, SOLID principles, Java 25 features | Designing domain models, architecting services, using records/sealed classes |
-| **spring-boot-engineer** | REST APIs, Spring configuration, Firebase/LangChain4j integration | Building endpoints, configuring Spring Boot, transaction management |
+| **spring-boot-engineer** | REST APIs, Spring configuration, integrations | Building endpoints, configuring Spring Boot, transaction management |
 | **postgres-pro** | SQL optimization, Liquibase migrations, schema design, query tuning | Database design, writing migrations, optimizing queries |
 
 #### Frontend Development
@@ -127,8 +118,6 @@ tools: Read, Write, Edit, Bash, Glob, Grep
 
 | Agent | Description | Use When |
 |-------|-------------|----------|
-| **firebase-auth-specialist** | Full-stack Firebase auth, Spring Security, Angular auth state | Authentication flows, token handling, route guards |
-| **langchain4j-ai-engineer** | AI services, RAG patterns, prompt engineering, async processing | AI features, embeddings, proposal analysis |
 | **test-automator** | JUnit 5, Testcontainers, Angular testing, test strategies | Writing tests, improving coverage, test infrastructure |
 | **code-reviewer** | Code quality, security, best practices enforcement | Code reviews, quality checks, convention compliance |
 | **security-auditor** | Vulnerability detection, secure patterns, input validation | Security reviews, penetration testing, compliance |
@@ -140,7 +129,7 @@ Agents are designed to work together with clear ownership boundaries. For exampl
 
 - **java-architect** defines exception hierarchies; **spring-boot-engineer** implements `@ExceptionHandler`
 - **angular-architect** builds components; **typescript-pro** defines type contracts
-- **firebase-auth-specialist** handles auth; **security-auditor** reviews for vulnerabilities
+- **test-automator** writes tests; **security-auditor** reviews for vulnerabilities
 
 ## Skills
 
@@ -306,57 +295,6 @@ This plugin includes **70+ specialized skills** organized by category:
 | **spec-miner** | Analysis process, specification extraction, EARS format |
 | **atlassian-mcp** | Jira queries, Confluence operations, MCP server setup, workflows |
 
----
-
-### CFP-Specific Skills
-
-These skills are specifically designed for the Devoxx CFP application:
-
-#### cfp-development-practices
-
-**Location:** `skills/cfp-development-practices/`
-
-Project-level development workflow covering:
-
-- **Plan Structure** - Organizing implementation plans into phases and tasks
-- **Full-Stack Workflow** - Step-by-step feature implementation (DB → Backend → Frontend)
-- **Domain Patterns** - Proposal submission, speaker profile, admin review flows
-- **Test Organization** - Test types, naming conventions, commands
-- **Accessibility Requirements** - WCAG AA checklist
-- **Security Practices** - Input validation, XSS prevention, secrets management
-
-**Reference Files:**
-- `references/full-stack-workflow.md` - Detailed backend/frontend implementation steps
-- `references/test-commands.md` - Complete test command reference
-- `references/accessibility-checklist.md` - WCAG AA compliance checklist
-
-#### java-best-practices
-
-**Location:** `skills/java-best-practices/`
-
-Java patterns for type-first development:
-
-- **Records for DTOs** - Immutable data transfer objects
-- **Sealed Classes** - Discriminated unions with exhaustive pattern matching
-- **Value Objects** - Domain primitives like `ProposalId`, `SpeakerId`
-- **Optional Usage** - Explicit nullability
-- **Builder Pattern** - Required vs optional fields
-- **Exception Hierarchy** - Custom exception types
-- **Modern Java Features** - Pattern matching, virtual threads, structured concurrency
-- **Testing Patterns** - JUnit 5, parameterized tests, AssertJ
-
-#### typescript-best-practices
-
-**Location:** `skills/typescript-best-practices/`
-
-TypeScript patterns for robust frontend code:
-
-- **Discriminated Unions** - Type-safe state management
-- **Branded Types** - Distinct types for IDs
-- **Const Assertions** - Literal unions
-- **Zod Validation** - Runtime validation with type inference
-- **Functional Patterns** - Immutability, pure functions
-- **Configuration** - Typed config with validation
 
 ## Rules
 
@@ -373,18 +311,18 @@ Key conventions enforced:
 ```typescript
 // Standalone components (default in Angular 18+)
 @Component({
-  selector: 'cfp-example',
+  selector: 'app-example',
   // standalone: true is NOT needed - it's the default
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `...`
 })
 
 // Use input() and output() functions
-readonly proposal = input<ProposalDTO | null>(null);
-readonly submitted = output<ProposalDTO>();
+readonly item = input<ItemDTO | null>(null);
+readonly submitted = output<ItemDTO>();
 
 // Use inject() for DI
-private service = inject(ProposalService);
+private service = inject(DataService);
 
 // Use signals for state
 private loading = signal(false);
@@ -651,14 +589,14 @@ The plugin manifest defining metadata and entry points:
 
 ```json
 {
-  "name": "devoxx-cfp",
+  "name": "claude-code-plugin",
   "version": "1.0.0",
-  "description": "Claude Code plugin for the Devoxx CFP application...",
+  "description": "Comprehensive Claude Code plugin with agents, skills, hooks, and commands",
   "author": {
-    "name": "Devoxx",
-    "url": "https://devoxx.com"
+    "name": "Stephan Janssen",
+    "url": "https://github.com/stephanj"
   },
-  "keywords": ["devoxx", "cfp", "java", "spring-boot", "angular", "firebase"],
+  "keywords": ["claude-code", "agents", "skills", "hooks", "development"],
   "license": "MIT",
   "agents": "agents/",
   "skills": "skills/",
@@ -732,15 +670,15 @@ Local developer overrides (should be gitignored). Use this for:
 Ask Claude Code to use a specific agent:
 
 ```
-Use the java-architect agent to design a domain model for conference sessions
+Use the java-architect agent to design a domain model for user management
 ```
 
 ```
-Ask the angular-architect to create a proposal submission form with validation
+Ask the angular-architect to create a form with validation
 ```
 
 ```
-Have the test-automator write integration tests for the ProposalController
+Have the test-automator write integration tests for the UserController
 ```
 
 ### Running Commands
@@ -754,11 +692,11 @@ Have the test-automator write integration tests for the ProposalController
 Skills are typically loaded automatically based on context, but you can reference them:
 
 ```
-Following the cfp-development-practices skill, implement a new speaker profile feature
+Using the react-expert skill, implement a dashboard component
 ```
 
 ```
-Apply java-best-practices patterns to refactor the ProposalService
+Apply kubernetes-specialist patterns to deploy this service
 ```
 
 ### Typical Workflows
@@ -775,61 +713,12 @@ Apply java-best-practices patterns to refactor the ProposalService
 **Fixing an accessibility issue:**
 1. Use `accessibility-tester` to identify issues
 2. Use `angular-architect` to implement fixes
-3. Reference `references/accessibility-checklist.md` for compliance
+3. Reference WCAG guidelines for compliance
 
-**Implementing authentication:**
-1. Use `firebase-auth-specialist` for full-stack guidance
-2. Covers backend (Spring Security) and frontend (Angular) in one workflow
-
-## CFP Tech Stack
-
-This plugin is designed for projects using:
-
-**Backend:**
-- Java 25 with modern features (records, sealed classes, pattern matching)
-- Spring Boot 3 with Spring Security
-- PostgreSQL with Liquibase migrations
-- Firebase Admin SDK for authentication
-- LangChain4j for AI features
-
-**Frontend:**
-- Angular 18 with standalone components
-- TypeScript with strict mode
-- Signals for state management
-- PrimeNG UI components
-- Firebase JS SDK
-
-**Build & Test:**
-- Maven (backend) with mvnd for speed
-- pnpm (frontend)
-- Mise for unified task running
-- JUnit 5 + Testcontainers (backend)
-- Jasmine/Karma (frontend)
-- GitHub Actions (CI/CD)
-
-## Key Commands Reference
-
-```bash
-# Environment setup
-mise run env:setup
-mise run dev:start
-
-# Testing
-mise run test                          # All tests
-mise run test --unit                   # Backend unit (fast)
-mise run test --integration            # Backend IT (Docker)
-mise run test --frontend               # Angular tests
-mise run test --include='Pattern*'     # Filter tests
-mise run test --coverage               # With coverage
-
-# Code quality
-mise run code:fmt                      # Format code
-mise run code:lint                     # Lint check
-
-# Database
-mise run dev:db:sql                    # Interactive psql
-mise run dev:db:sql -- -c "SELECT 1"   # Run query
-```
+**Deploying to Kubernetes:**
+1. Use `devops-engineer` for CI/CD setup
+2. Use `kubernetes-specialist` for manifests and Helm charts
+3. Use `terraform-engineer` for infrastructure as code
 
 ## Contributing
 
@@ -845,4 +734,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Created for the Devoxx community by [Stephan Janssen](https://github.com/stephanj)**
+**Created by [Stephan Janssen](https://github.com/stephanj)**
